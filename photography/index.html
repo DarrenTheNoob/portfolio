@@ -13,7 +13,7 @@
       --border:    #242420;
       --text:      #e8e3d8;
       --muted:     #6b6860;
-      --accent:    #5c8a6a;
+      --accent:    #3a8c5c;
       --font-display: 'Syne', sans-serif;
       --font-body:    'DM Sans', sans-serif;
       --font-mono:    'DM Mono', monospace;
@@ -308,7 +308,6 @@
       <span>Singapore · GMT +8:00</span>
       <span>@darren.dng</span>
     </div>
-    <p class="mood-hint">Click anywhere to shift mood →</p>
   </section>
 
   <!-- Series -->
@@ -369,20 +368,6 @@
   </footer>
 
   <script>
-    /* ── Mood shift ── */
-    const moods = [
-      { accent: '#5c8a6a' },
-      { accent: '#c97d3a' },
-      { accent: '#4a6fa5' },
-      { accent: '#9a6b5e' },
-    ];
-    let moodIndex = 0;
-    document.body.addEventListener('click', (e) => {
-      if (e.target.closest('a') || e.target.closest('button')) return;
-      moodIndex = (moodIndex + 1) % moods.length;
-      document.documentElement.style.setProperty('--accent', moods[moodIndex].accent);
-    });
-
     /* ── Series navigation ── */
     document.querySelectorAll('.series-item[data-href]').forEach(item => {
       item.addEventListener('click', () => {
