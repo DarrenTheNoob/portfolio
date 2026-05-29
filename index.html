@@ -71,16 +71,18 @@
 
     /* ── Hero ── */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding: 7rem 2.5rem 4rem;
       position: relative;
-      background-image: url('assets/yosemite_profile.png');
-      background-repeat: no-repeat;
-      background-position: bottom center;
-      background-size: cover;
+      overflow: hidden;
+      border-top: none;
+      padding: 0;
+      background-color: #000;
+    }
+    .hero-forest {
+      display: block;
+      width: 100%;
+      height: clamp(360px, 48vh, 520px);
+      object-fit: cover;
+      object-position: top center;
     }
     .hero::before {
       content: '';
@@ -106,7 +108,11 @@
       pointer-events: none;
     }
     .hero-content {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 7rem 2.5rem 0;
       z-index: 3;
     }
     .hero-eyebrow {
@@ -379,6 +385,7 @@
 
   <!-- Hero -->
   <section class="hero" id="home">
+    <img class="hero-forest" src="assets/yosemite_profile.png" alt="" aria-hidden="true">
     <div class="hero-content">
       <p class="hero-eyebrow">Portfolio</p>
       <h1 class="hero-name">Darren<br>Marcus Loo</h1>
