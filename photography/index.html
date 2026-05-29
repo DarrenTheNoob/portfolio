@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photography — Darren Marcus Loo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0e0e0c;
+      --surface:   #161614;
+      --border:    #242420;
+      --text:      #e8e3d8;
+      --muted:     #6b6860;
+      --accent:    #5c8a6a;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(14,14,12,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-back-arrow { font-size: 1rem; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
+    .nav-logo span { color: var(--accent); transition: color 0.4s; }
+    .nav-instagram {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-instagram:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.5rem 4rem;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      transition: color 0.4s;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .hero-sub {
+      font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 420px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+    .hero-sub em {
+      color: var(--text);
+      font-style: normal;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .hero-meta span::before {
+      content: '·';
+      margin-right: 1.5rem;
+      color: var(--border);
+    }
+    .hero-meta span:first-child::before { display: none; }
+    .mood-hint {
+      position: absolute;
+      bottom: 4rem;
+      right: 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--border);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      user-select: none;
+      transition: color 0.3s;
+    }
+    .mood-hint:hover { color: var(--muted); }
+
+    /* ── Series ── */
+    section {
+      padding: 5rem 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+      transition: color 0.4s;
+    }
+    .series-list { list-style: none; }
+    .series-item {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr auto;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .series-item:first-child { border-top: 1px solid var(--border); }
+    .series-item:hover { opacity: 0.75; }
+    .series-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .series-info { }
+    .series-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .series-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .series-arrow {
+      font-size: 1.1rem;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: color 0.4s, opacity 0.2s, transform 0.2s;
+    }
+    .series-item:hover .series-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ── About strip ── */
+    .about-strip {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .about-strip p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.8;
+    }
+    .about-strip p em {
+      color: var(--text);
+      font-style: normal;
+    }
+    .about-strip-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: flex-end;
+    }
+    .about-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.2rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .about-link:hover {
+      color: var(--text);
+      border-color: var(--muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    footer a { transition: color 0.2s; }
+    footer a:hover { color: var(--text); }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .hero { padding: 0 1.25rem 3rem; }
+      .mood-hint { display: none; }
+      section { padding: 3.5rem 1.25rem; }
+      .series-item { grid-template-columns: 2.5rem 1fr auto; }
+      .about-strip { flex-direction: column; gap: 2rem; }
+      .about-strip-links { align-items: flex-start; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a class="nav-back" href="../index.html">
+      <span class="nav-back-arrow">←</span>
+      <span>Portfolio</span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-logo"><span>Darren</span> Marcus Loo</div>
+      <a class="nav-instagram" href="https://instagram.com/darren.dng" target="_blank">@darren.dng</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <p class="hero-eyebrow">Photography</p>
+    <h1 class="hero-name">Frames<br>from places.</h1>
+    <p class="hero-sub">
+      Location-based photography.<br>
+      <em>Finding the signal in what surrounds you.</em>
+    </p>
+    <div class="hero-meta">
+      <span>Singapore · GMT +8:00</span>
+      <span>@darren.dng</span>
+    </div>
+    <p class="mood-hint">Click anywhere to shift mood →</p>
+  </section>
+
+  <!-- Series -->
+  <section id="series">
+    <p class="section-label">Series</p>
+    <ul class="series-list">
+
+      <li class="series-item reveal" data-href="#">
+        <span class="series-num">(01)</span>
+        <div class="series-info">
+          <p class="series-title">Coming Soon</p>
+          <p class="series-meta">Location — Year</p>
+        </div>
+        <span class="series-arrow">→</span>
+      </li>
+
+      <li class="series-item reveal" data-href="#">
+        <span class="series-num">(02)</span>
+        <div class="series-info">
+          <p class="series-title">Coming Soon</p>
+          <p class="series-meta">Location — Year</p>
+        </div>
+        <span class="series-arrow">→</span>
+      </li>
+
+      <li class="series-item reveal" data-href="#">
+        <span class="series-num">(03)</span>
+        <div class="series-info">
+          <p class="series-title">Coming Soon</p>
+          <p class="series-meta">Location — Year</p>
+        </div>
+        <span class="series-arrow">→</span>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <p class="section-label">On shooting</p>
+    <div class="about-strip reveal">
+      <p>
+        I shoot locations — the <em>texture of places</em> before they change,
+        the light that only exists for a moment, the geometry that most people
+        walk past. No studio, no staging. <em>Just somewhere, and a camera.</em>
+      </p>
+      <div class="about-strip-links">
+        <a class="about-link" href="https://instagram.com/darren.dng" target="_blank">Instagram →</a>
+        <a class="about-link" href="../index.html">Main portfolio →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span>© 2025 Darren Marcus Loo</span>
+    <a href="../index.html">← Back to portfolio</a>
+  </footer>
+
+  <script>
+    /* ── Mood shift ── */
+    const moods = [
+      { accent: '#5c8a6a' },
+      { accent: '#c97d3a' },
+      { accent: '#4a6fa5' },
+      { accent: '#9a6b5e' },
+    ];
+    let moodIndex = 0;
+    document.body.addEventListener('click', (e) => {
+      if (e.target.closest('a') || e.target.closest('button')) return;
+      moodIndex = (moodIndex + 1) % moods.length;
+      document.documentElement.style.setProperty('--accent', moods[moodIndex].accent);
+    });
+
+    /* ── Series navigation ── */
+    document.querySelectorAll('.series-item[data-href]').forEach(item => {
+      item.addEventListener('click', () => {
+        const href = item.dataset.href;
+        if (href && href !== '#') window.location.href = href;
+      });
+    });
+
+    /* ── Scroll reveal ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

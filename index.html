@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Darren Marcus Loo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      --bg:        #0e0e0c;
+      --surface:   #161614;
+      --border:    #242420;
+      --text:      #e8e3d8;
+      --muted:     #6b6860;
+      --accent:    #5c8a6a;   /* mood 1 — forest green (default) */
+      --accent-2:  #c97d3a;   /* mood 2 — burnt amber */
+      --accent-3:  #4a6fa5;   /* mood 3 — slate blue */
+      --accent-4:  #9a6b5e;   /* mood 4 — clay */
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: --accent 0.4s ease;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(14,14,12,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--accent); transition: color 0.4s; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .nav-links a { transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.5rem 4rem;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      transition: color 0.4s;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .hero-tagline {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.5;
+      margin-bottom: 2.5rem;
+    }
+    .hero-tagline em {
+      color: var(--text);
+      font-style: normal;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .hero-meta span::before {
+      content: '·';
+      margin-right: 1.5rem;
+      color: var(--border);
+    }
+    .hero-meta span:first-child::before { display: none; }
+    .mood-hint {
+      position: absolute;
+      bottom: 4rem;
+      right: 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--border);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      user-select: none;
+      transition: color 0.3s;
+    }
+    .mood-hint:hover { color: var(--muted); }
+
+    /* ── Section base ── */
+    section {
+      padding: 5rem 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+      transition: color 0.4s;
+    }
+
+    /* ── Works ── */
+    .works-list {
+      list-style: none;
+    }
+    .work-item {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr auto;
+      align-items: baseline;
+      gap: 1.5rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .work-item:first-child { border-top: 1px solid var(--border); }
+    .work-item:hover { opacity: 0.75; }
+    .work-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .work-info { }
+    .work-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+    .work-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .work-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .work-arrow {
+      display: none;
+      font-size: 0.9rem;
+      color: var(--accent);
+      transition: color 0.4s, transform 0.2s;
+    }
+    .work-item:hover .work-arrow {
+      display: inline;
+      transform: translateX(3px);
+    }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .about-text p em {
+      color: var(--text);
+      font-style: normal;
+    }
+    .about-details { }
+    .detail-group {
+      margin-bottom: 2rem;
+    }
+    .detail-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      transition: color 0.4s;
+    }
+    .detail-value {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .detail-value a:hover { color: var(--text); }
+
+    /* ── Contact ── */
+    .contact-inner {
+      max-width: 640px;
+    }
+    .contact-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+      color: var(--text);
+    }
+    .contact-heading em {
+      color: var(--accent);
+      font-style: normal;
+      transition: color 0.4s;
+    }
+    .contact-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .contact-link {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.25rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover {
+      color: var(--text);
+      border-color: var(--muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    footer a { transition: color 0.2s; }
+    footer a:hover { color: var(--text); }
+
+    /* ── Reveal animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .hero { padding: 0 1.25rem 3rem; }
+      .mood-hint { display: none; }
+      section { padding: 3.5rem 1.25rem; }
+      .work-item { grid-template-columns: 2.5rem 1fr; }
+      .work-tags { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-logo"><span>Darren</span> Marcus Loo</div>
+    <ul class="nav-links">
+      <li><a href="#works">Works</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="photography/index.html">Photography</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <p class="hero-eyebrow">Portfolio</p>
+    <h1 class="hero-name">Darren<br>Marcus Loo</h1>
+    <p class="hero-tagline">
+      <em>I value things with numbers.</em><br>
+      I value things without them.
+    </p>
+    <div class="hero-meta">
+      <span>Singapore · GMT +8:00</span>
+      <span>SMU · Sustainable Finance</span>
+      <span>Analytics</span>
+    </div>
+    <p class="mood-hint">Click anywhere to shift mood →</p>
+  </section>
+
+  <!-- Works -->
+  <section id="works">
+    <p class="section-label">Selected Works</p>
+    <ul class="works-list">
+
+      <li class="work-item reveal" data-href="#">
+        <span class="work-num">(01)</span>
+        <div class="work-info">
+          <p class="work-title">Coming Soon</p>
+          <p class="work-desc">Investment thesis — Project Finance · Renewable Energy</p>
+        </div>
+        <div class="work-tags">
+          <span class="tag">Project Finance</span>
+          <span class="tag">ESG</span>
+        </div>
+      </li>
+
+      <li class="work-item reveal" data-href="#">
+        <span class="work-num">(02)</span>
+        <div class="work-info">
+          <p class="work-title">Coming Soon</p>
+          <p class="work-desc">Financial model — DCF & Scenario Analysis</p>
+        </div>
+        <div class="work-tags">
+          <span class="tag">Valuation</span>
+          <span class="tag">Modelling</span>
+        </div>
+      </li>
+
+      <li class="work-item reveal" data-href="#">
+        <span class="work-num">(03)</span>
+        <div class="work-info">
+          <p class="work-title">Coming Soon</p>
+          <p class="work-desc">ESG analysis — Sustainability stewardship framework</p>
+        </div>
+        <div class="work-tags">
+          <span class="tag">Sustainability</span>
+          <span class="tag">Green Finance</span>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <p class="section-label">About</p>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I'm a <em>sustainable finance and analytics</em> student at Singapore Management University,
+          building at the intersection of capital markets and climate transition.
+        </p>
+        <p>
+          I think in systems. I work in numbers. And when I'm not at a spreadsheet,
+          I'm finding <em>signal in places that don't have a Bloomberg terminal.</em>
+        </p>
+      </div>
+      <div class="about-details reveal">
+        <div class="detail-group">
+          <p class="detail-label">Education</p>
+          <p class="detail-value">Singapore Management University<br>B.Sc. Integrative Studies (Sustainable Finance & Analytics)</p>
+        </div>
+        <div class="detail-group">
+          <p class="detail-label">Focus areas</p>
+          <p class="detail-value">Project Finance · ESG · Climate Finance<br>Valuation · Green Finance · Strategy</p>
+        </div>
+        <div class="detail-group">
+          <p class="detail-label">Also</p>
+          <p class="detail-value"><a href="photography/index.html">Photography →</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <p class="section-label">Contact</p>
+      <h2 class="contact-heading">Let's talk about<br><em>what matters.</em></h2>
+      <p style="color: var(--muted); font-weight: 300; font-size: 0.95rem; max-width: 400px;">
+        Open to conversations about sustainable finance, internships, research, or anything at the edge of numbers and ideas.
+      </p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:darrenloo1618@gmail.com">Email</a>
+        <a class="contact-link" href="https://www.linkedin.com/in/darrenmarcusloo/" target="_blank">LinkedIn</a>
+        <a class="contact-link" href="https://instagram.com/darren.dng" target="_blank">Instagram</a>
+        <a class="contact-link" href="https://github.com/DarrenTheNoob" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span>© 2025 Darren Marcus Loo</span>
+    <a href="photography/index.html">Photography →</a>
+  </footer>
+
+  <script>
+    /* ── Mood shift on click ── */
+    const moods = [
+      { accent: '#5c8a6a' },  // forest green
+      { accent: '#c97d3a' },  // burnt amber
+      { accent: '#4a6fa5' },  // slate blue
+      { accent: '#9a6b5e' },  // clay
+    ];
+    let moodIndex = 0;
+    document.body.addEventListener('click', (e) => {
+      if (e.target.closest('a') || e.target.closest('button')) return;
+      moodIndex = (moodIndex + 1) % moods.length;
+      document.documentElement.style.setProperty('--accent', moods[moodIndex].accent);
+    });
+
+    /* ── Work item navigation ── */
+    document.querySelectorAll('.work-item[data-href]').forEach(item => {
+      item.addEventListener('click', () => {
+        const href = item.dataset.href;
+        if (href && href !== '#') window.location.href = href;
+      });
+    });
+
+    /* ── Scroll reveal ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
