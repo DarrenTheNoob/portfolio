@@ -358,11 +358,40 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
+      /* Nav */
       nav { padding: 1rem 1.25rem; }
-      .nav-links { gap: 1.25rem; }
-      .hero { padding: 0 1.25rem 3rem; }
-      .mood-hint { display: none; }
-      section { padding: 3.5rem 1.25rem; }
+      .nav-logo { display: none; }
+      .nav-links {
+        gap: 1rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+      }
+
+      /* Hero */
+      .hero-forest {
+        height: clamp(340px, 90vw, 420px);
+      }
+      .hero-content { padding: 4rem 1.25rem 0; }
+      .hero-name {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        letter-spacing: -0.01em;
+      }
+      .hero-tagline {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+        max-width: 100%;
+      }
+      .hero-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15rem;
+        font-size: 0.7rem;
+      }
+      .hero-meta span::before { display: none; }
+
+      /* Sections */
+      section { padding: 3rem 1.25rem; }
       .work-item { grid-template-columns: 2.5rem 1fr; }
       .work-tags { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
